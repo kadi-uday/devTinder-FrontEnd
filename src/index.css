@@ -1,2 +1,23 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+* {
+  @apply transition-colors duration-200;
+}
+
+body {
+  @apply bg-base-100;
+}
+
+.btn-primary:hover,
+.btn-success:hover {
+  @apply scale-105 transition-transform;
+}
+
+.card {
+  @apply transition-all duration-300;
+}
+
+.card:hover {
+  @apply -translate-y-1;
+}
