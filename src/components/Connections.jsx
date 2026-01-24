@@ -37,7 +37,7 @@ const Connections = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {connections.map((connection) => {
-            const { _id, firstName, lastName, photoUrl, age, gender, about } =
+            const { _id, firstName, lastName, photoUrl, age, gender, about, skills } =
               connection;
 
             return (
@@ -66,6 +66,18 @@ const Connections = () => {
                     </p>
                   )}
                   <p className="text-base-content/80 line-clamp-3">{about}</p>
+                  {skills && skills.length > 0 && (
+                    <div className="mt-3">
+                      <p className="text-base-content/75 font-medium mb-2">Skills:</p>
+                      <div className="flex flex-wrap gap-1 justify-center">
+                        {skills.map((skill, index) => (
+                          <span key={index} className="badge badge-primary badge-outline badge-md">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <div className="card-actions justify-center pt-4">
                     <Link to={"/chat/" + _id} className="w-full">
                       <button className="btn btn-primary w-full">

@@ -25,6 +25,15 @@ const Feed = () => {
     getFeed();
   }, []);
 
+  if (!feed) return;
+
+  if (feed.length <= 0)
+    return (
+      <h1 className="flex  text-3xl font-medium justify-center my-10">
+        No more users to show
+      </h1>
+    );
+
   return (
     feed && (
       <div className="flex items-center justify-center min-h-screen bg-linear-to-br from-base-100 to-base-200 pt-14 pb-28 px-4">

@@ -47,7 +47,7 @@ const Requests = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {requests.map((request) => {
-            const { _id, firstName, lastName, photoUrl, age, gender, about } =
+            const { _id, firstName, lastName, photoUrl, age, gender, about, skills } =
               request.fromUserId;
 
             return (
@@ -76,6 +76,18 @@ const Requests = () => {
                     </p>
                   )}
                   <p className="text-base-content/80 line-clamp-3">{about}</p>
+                  {skills && skills.length > 0 && (
+                    <div className="mt-3">
+                      <p className="text-base-content/75 font-medium mb-2">Skills:</p>
+                      <div className="flex flex-wrap gap-1 justify-center">
+                        {skills.map((skill, index) => (
+                          <span key={index} className="badge badge-primary badge-outline badge-md">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <div className='flex gap-4 justify-center pt-4'>
                     <button className='btn btn-success btn-outline btn-lg' onClick={() => reviewRequest("accepted", request._id)}>Accept</button>
                     <button className='btn btn-error btn-outline btn-lg' onClick={() => reviewRequest("rejected", request._id)}>Reject</button>

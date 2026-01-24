@@ -12,9 +12,22 @@ const EditProfile = ({ user }) => {
   const [age, setAge] = useState(user.age || "");
   const [gender, setGender] = useState(user.gender || "");
   const [about, setAbout] = useState(user.about || "");
+  const [skills, setSkills] = useState(user.skills || []);
+  const [skillInput, setSkillInput] = useState("");
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const [showToast, setShowToast] = useState(false);
+
+  const addSkill = () => {
+    if (skillInput.trim() && !skills.includes(skillInput.trim())) {
+      setSkills([...skills, skillInput.trim()]);
+      setSkillInput("");
+    }
+  };
+
+  const removeSkill = (index) => {
+    setSkills(skills.filter((_, i) => i !== index));
+  };
 
   const saveProfile = async () => {
     //Clear Errors
@@ -29,6 +42,7 @@ const EditProfile = ({ user }) => {
           age,
           gender,
           about,
+          skills,
         },
         { withCredentials: true }
       );
@@ -124,6 +138,47 @@ const EditProfile = ({ user }) => {
                     onChange={(e) => setAbout(e.target.value)}
                   />
                 </label>
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text font-semibold">Skills</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={skillInput}
+                      placeholder="Add a skill"
+                      className="input input-bordered w-full focus:input-primary focus:outline-0"
+                      onChange={(e) => setSkillInput(e.target.value)}
+                      onKeyPress={(e) => e.key === "Enter" && addSkill()}
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-outline btn-primary"
+                      onClick={addSkill}
+                    >
+                      Add
+                    </button>
+                  </div>
+                  {skills.length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {skills.map((skill, index) => (
+                        <div
+                          key={index}
+                          className="badge badge-primary badge-lg gap-2 py-3"
+                        >
+                          {skill}
+                          <button
+                            type="button"
+                            onClick={() => removeSkill(index)}
+                            className="btn btn-ghost btn-xs"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </label>
               </div>
               {error && (
                 <div className="alert alert-error mt-4">
@@ -142,7 +197,7 @@ const EditProfile = ({ user }) => {
         </div>
         <div className="flex justify-center flex-1 items-start pt-0">
           <UserCard
-            user={{ firstName, lastName, photoUrl, age, gender, about }}
+            user={{ firstName, lastName, photoUrl, age, gender, about, skills }}
           />
         </div>
       </div>
